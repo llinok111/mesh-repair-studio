@@ -1,0 +1,11 @@
+node_modules/
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.zip
+*.tar.gz
+*.tgz
+*.7z
+.DS_Store
+.model-patch.yml

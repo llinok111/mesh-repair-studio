@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>mesh-repair-studio — ε 焊接修复扫描</title>
+<style>
+  body { margin: 0; font-family: -apple-system, system-ui, Segoe UI, Roboto, Arial, sans-serif; color: #222; }
+  #app { display: flex; height: 100vh; }
+  #viewer { flex: 1; position: relative; }
+  #panel {
+    width: 300px; padding: 16px; box-sizing: border-box;
+    background: #f6f7f9; border-left: 1px solid #ddd; overflow-y: auto;
+    font-size: 13px; line-height: 1.6;
+  }
+  #panel h1 { font-size: 16px; margin: 0 0 4px; }
+  #sub { color: #666; margin: 0 0 12px; font-size: 12px; }
+  .row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #eee; }
+  .row b { font-variant-numeric: tabular-nums; }
+  input[type=range] { width: 100%; margin: 6px 0 0; }
+  #badge {
+    margin-top: 12px; padding: 8px; border-radius: 6px; font-weight: 600; text-align: center;
+  }
+  .ok { background: #e2f3e4; color: #147a1a; }
+  .no { background: #fde7e7; color: #b00020; }
+  #chart { margin-top: 12px; }
+  .bar { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 11px; }
+  .bar .fill { height: 12px; background: #4a90d9; border-radius: 3px; min-width: 2px; }
+  .bar .lab { width: 40px; text-align: right; color: #888; }
+  footer { margin-top: 14px; color: #999; font-size: 11px; }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="viewer"></div>
+  <div id="panel">
+    <h1>mesh-repair-studio</h1>
+    <p id="sub">拖容差 ε → three.js 渲染 + 同 core 现场复算，与 node 位级一致</p>
+    <div class="row"><span>ε（焊接容差）</span><span><b id="epsVal"></b></span></div>
+    <input type="range" id="epsSlider" min="0" max="5" value="0" step="1" />
+    <div class="row"><span>顶点（入 / 焊后 unique）</span><span><b id="verts"></b></span></div>
+    <div class="row"><span>焊走副本</span><span><b id="welded"></b></span></div>
+    <div class="row"><span>边界边</span><span><b id="bEdges"></b></span></div>
+    <div class="row"><span>水密</span><span><b id="watertight"></b></span></div>
+    <div class="row"><span>欧拉 χ = V−E+F</span><span><b id="euler"></b></span></div>
+    <div id="badge" class="no">…待首算…</div>
+    <div id="chart"></div>
+    <footer>证据：bench/result.json · node 复算见 bench/verify.mjs</footer>
+  </div>
+</div>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
